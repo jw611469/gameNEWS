@@ -20,6 +20,7 @@ $(function() {
 function setActive(){
   let url=decodeURI($(window).attr('location')).split('/')
   let page=url[url.length-1];
+  page = page.split('?')[0]
   if(page=='home'){
     $('#tm-nav').find('.active').removeClass('active');
     $('#tm-nav li:eq(0)').addClass("active");

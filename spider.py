@@ -86,7 +86,8 @@ class crawler:
                 time.append(buff.split('\n')[-2].strip())
             page+=1
             if(len(title)>=self.count):
-                return title,href,content,img,author,time
+                return author,time
+                # return title,href,content,img,author,time
     def gamebase(self):
         pass        
     def run(self):
@@ -99,4 +100,6 @@ class crawler:
         elif(self.web=='gamebase'or self.web==2):
             self.gamebase()        
 c = crawler(1,10)
-a,t = c.run()
+# a,t = c.run()
+# print(a)
+# print(t)
