@@ -87,16 +87,16 @@ class crawler:
             page+=1
             if(len(title)>=self.count):
                 return title,href,content,img,author,time
-    # def gamebase(self):
-    #     pass        
-    # def run(self):
-    #     if(not self.support()):
-    #         print('[-]'+str(self.web)+' is not supported')
-    #     if(self.web=='gamer' or self.web == 0):
-    #         return self.gamer()
-    #     elif(self.web=='4gamer' or self.web==1):
-    #         return self.fgamer()
-    #     elif(self.web=='gamebase'or self.web==2):
-    #         self.gamebase()        
+    def gamebase(self):
+        pass        
+    def run(self):
+        if(not self.support()):
+            print('[-]'+str(self.web)+' is not supported')
+        if(self.web=='gamer' or self.web == 0):
+            return self.gamer()
+        elif(self.web=='4gamer' or self.web==1):
+            return self.fgamer()
+        elif(self.web=='gamebase'or self.web==2):
+            self.gamebase()        
 c = crawler(1,10)
 a,t = c.run()
