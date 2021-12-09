@@ -1,4 +1,4 @@
-from flask import Flask,render_template,send_from_directory,url_for,redirect
+from flask import Flask,render_template,send_from_directory,url_for,redirect,request
 
 app = Flask(__name__,template_folder='./temp')
 
@@ -40,8 +40,16 @@ def fcontact():
 
 @app.route('/home')
 def home():
-    return render_template('index.html')
-
+    try:
+        if(int(request.args['p'])>100):
+            p=100
+        elif(int(request.args['p'])<1):
+            p=1
+        else:
+            p = int(request.args['p'])
+        return render_template('index.html',p=p) 
+    except:
+        return render_template('index.html',p=1)
 @app.route('/home.html')
 def fhome():
     return redirect(url_for('home'))
