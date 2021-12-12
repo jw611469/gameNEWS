@@ -39,15 +39,25 @@ class crawler:
             if len(img)>=self.count:
                 break
         for i in range(0,self.count):
-            res = requests.get('https:'+href[i],headers=self.header)
-            res = BeautifulSoup(res.text,'html.parser')
-            box3A = res.find('p',{'class':'GN-lbox3A'}).find('span')
-            if(' 原文出處' in box3A.text):
-                text = box3A.text.strip(' 原文出處')
-            else:
-                text = box3A.text
-            time.append(text.split(' ')[-2]+' '+text.split(' ')[-1])
-            author.append(text.strip(time[i])[1:-3])
+            try:
+                res = requests.get('https:'+href[i],headers=self.header)
+                res = BeautifulSoup(res.text,'html.parser')
+                box3A = res.find('p',{'class':'GN-lbox3A'}).find('span')
+                if(' 原文出處' in box3A.text):
+                    text = box3A.text.strip(' 原文出處')
+                else:
+                    text = box3A.text
+                time.append(text.split(' ')[-2]+' '+text.split(' ')[-1])
+                author.append(text.strip(time[i])[1:-3])
+            except:
+                res = requests.get('https:'+href[i],headers=self.header)
+                url = 'https://home.gamer.com.tw/creationDetail.php'
+                url += res.text.split(url)[1].split('\'')[0]
+                res = requests.get(url,headers=self.header)
+                res = BeautifulSoup(res.text,'html.parser')
+                ST1 = res.find('span',{'class':'ST1'})
+                time.append(ST1.text.split('│')[1])
+                author.append(ST1.text.split('│')[0].split('：')[1])               
         return title,href,content,img,author,time
     def fgamer(self):
         title = []
@@ -108,6 +118,6 @@ class crawler:
             return self.fgamer()
         elif(self.web=='gamebase'or self.web==2):
             self.gamebase()        
-# c = crawler(1,10)
+# c = crawler(0,10)
 # t,h,c,i,a,ti = c.run()
 # print(ti)
