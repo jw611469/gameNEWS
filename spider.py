@@ -47,7 +47,7 @@ class crawler:
             else:
                 text = box3A.text
             time.append(text.split(' ')[-2]+' '+text.split(' ')[-1])
-            author.append(text.strip(time[i]))
+            author.append(text.strip(time[i])[1:-3])
         return title,href,content,img,author,time
     def fgamer(self):
         title = []
@@ -64,14 +64,22 @@ class crawler:
             for a in block.find_all('a'):
                 if(a.getText()=='Next'):
                     continue
+                if(len(title)==self.count):
+                    break
                 title.append(a.getText().split('\n')[1])
                 href.append(a['href'])
             for i in range(2,126,5):
-                content.append(block.find_all('div')[i].getText().split('\n')[1])   
+                content.append(block.find_all('div')[i].getText().split('\n')[1])
+                if(len(content)==self.count):
+                    break
             for pic in block.find_all('img'):
                 img.append(pic['src'])
+                if(len(img)==self.count):
+                    break
             for aut in block.find_all('div',{'class':'author'}):
                 author.append(aut.text.split('\n')[-2].strip())
+                if(len(author)==self.count):
+                    break
             for t in block.find_all('time'):
                 buff = mreplace(t.text,['年','月'],'-')
                 buff = buff.replace('日','')
@@ -84,6 +92,8 @@ class crawler:
                     buff[1] = ':'.join(buff[1])
                     buff = ''.join(buff)
                 time.append(buff.split('\n')[-2].strip())
+                if(len(time)==self.count):
+                    break
             page+=1
             if(len(title)>=self.count):
                 return title,href,content,img,author,time
@@ -98,7 +108,6 @@ class crawler:
             return self.fgamer()
         elif(self.web=='gamebase'or self.web==2):
             self.gamebase()        
-c = crawler(1,10)
-# a,t = c.run()
-# print(a)
-# print(t)
+# c = crawler(1,10)
+# t,h,c,i,a,ti = c.run()
+# print(ti)
