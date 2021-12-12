@@ -70,4 +70,4 @@ def fpost():
     return redirect(url_for('post'))
 
 if(__name__=='__main__'):
-    app.run(port=5050)
+    app.run()
