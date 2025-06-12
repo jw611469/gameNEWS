@@ -1,0 +1,14 @@
+services:
+  flask-app:
+    # image: flask-app
+    build: ./flask-app
+    container_name: news
+  nginx-web:
+      # image: nginx-web
+      build: ./nginx-web
+      ports:
+        - 80:80
+      links:
+        - flask-app
+
+
